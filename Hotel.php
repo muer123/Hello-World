@@ -2,6 +2,16 @@
 
 require('DB.php');
 
+$query  = "SELECT id, room_type, price "; 
+$query .= "FROM room ";
+
+
+$result = mysqli_query($connection, $query);
+
+if (!$result) {
+    die("query is wrong");
+}
+
 ?>
 <html>
     <head>
@@ -12,13 +22,14 @@ require('DB.php');
     <body>
         <div class="menu">
         <ul class="heading">
-            <li><a href=""><b>Home</b></a></li>
+            <li><a href="Hotel.php"><b>Home</b></a></li>
             <li><a href="login.php"><b>Login</b></a></li>
-            <li><a href=""><b>About Us</b></a></li>
+            <li><a href="register.php"><b>register</b></a></li>
+            <li><a href="about.php"><b>About Us</b></a></li>
         </ul>
         </div> 
         <div class="header">
-        <h3> Prince Al's Royal Hotel</h3>
+        <h3>Prince Al's Royal Hotel</h3>
         </div>
         <div class="bg">
         </div>
@@ -31,12 +42,27 @@ require('DB.php');
             <li><a href="manager.php">manager</a></li>
 		</ul>
         </div>
+        <p align='left'><b>Today's price</b></p>
+        <table width="250px" border="double" align="left">
+        <tr>
+        <td>room type</td>
+        <td>price</td>
+        </tr>
+<?php    
+//  use/show data
+while ($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    echo "<td>" . $row["room_type"] . "</td>";
+    echo "<td>" . $row["price"] . "</td>";
+    echo "</tr>";
+}
+?>
+        </table>
         <div class="box">
-        <p class="where">Where do you wanna go?</p>
         <form action="" method="post" class="sou">
-        <input type="text" name="search" placeholder="input location" class="search">
-        <input type="button" name="search" value="search" class="but"><br/><br/>
-        <input type="datetime-local" value="2019-05-01T12:00:00"/ class="date">
+        <input type="datetime-local" value="2019-05-01T12:00:00"/ class="date"><br/><br/>
+        <input type="text" name="search" placeholder="INPUT location" class="search">
+        <input type="button" name="search" value="search" class="but">
         </form>
         </div>
         <div class="bgound">
